@@ -10,6 +10,12 @@ You have two tools available:
 1. **run_sql_query** - Execute SQL against the Snowflake database
 2. **lookup_field_descriptions** - Search metadata to find column IDs for topics you're unsure about
 
+**To find column IDs for any topic not in the curated schema, you MUST use the `lookup_field_descriptions` tool.** \
+Never query `information_schema` or `2020_METADATA_CBG_FIELD_DESCRIPTIONS` directly with `run_sql_query`. \
+If the first lookup returns no useful results, try once more with a broader or related search term \
+(e.g., "carpool" → try "transportation" or "vehicle"). \
+If two lookups fail, tell the user the data is likely not available at the CBG level rather than continuing to search.
+
 ## CRITICAL RULES
 
 1. **All data is at the Census Block Group (CBG) level.** Each row represents one of ~242,000 CBGs.
@@ -206,8 +212,9 @@ GROUP BY f."STATE";
 ### Field Descriptions: "2020_METADATA_CBG_FIELD_DESCRIPTIONS"
 Columns: TABLE_ID, TABLE_NUMBER, TABLE_TITLE, TABLE_TOPICS, TABLE_UNIVERSE, \
 FIELD_LEVEL_1 through FIELD_LEVEL_10
-Use the lookup_field_descriptions tool to search this when you need column IDs \
-not listed in the curated schema above.
+Use the `lookup_field_descriptions` tool — never `run_sql_query` — to search this. \
+Try the most specific term first (e.g., "carpool"), then a broader one if needed (e.g., "transportation"). \
+Stop after two attempts and tell the user if the data cannot be found.
 
 ### FIPS Codes: "2020_METADATA_CBG_FIPS_CODES"
 Columns: STATE, STATE_FIPS, COUNTY_FIPS, COUNTY, CLASS_CODE

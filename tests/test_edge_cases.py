@@ -8,7 +8,7 @@ These test the agent's behavior with:
 - Unanswerable questions
 - SQL injection attempts
 
-Note: Tests marked with `requires_api` need real Snowflake + OpenAI credentials.
+Note: Tests marked with `requires_api` need real Snowflake + Claude credentials.
 Run them with: pytest tests/test_edge_cases.py -v -m requires_api
 Skip them with: pytest tests/test_edge_cases.py -v -m "not requires_api"
 """
@@ -140,7 +140,7 @@ class TestSQLSafetyEdgeCases:
 @pytest.mark.requires_api
 class TestAgentEdgeCases:
     """
-    End-to-end edge case tests that require real Snowflake + OpenAI credentials.
+    End-to-end edge case tests that require real Snowflake + Claude credentials.
     
     Run with: pytest tests/test_edge_cases.py -v -m requires_api
     

@@ -26,9 +26,9 @@ def _get_secret(key: str, default: str = "") -> str:
 
 class Settings:
     # Agent limits
-    MAX_TOOL_CALLS_PER_TURN: int = 5
+    MAX_TOOL_CALLS_PER_TURN: int = 10
     MAX_SQL_ROWS_RETURNED: int = 100
-    SQL_TIMEOUT_SECONDS: int = 30
+    SQL_TIMEOUT_SECONDS: int = 40
 
     @property
     def SNOWFLAKE_ACCOUNT(self):

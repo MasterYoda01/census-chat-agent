@@ -2,11 +2,28 @@
 Pre-LLM guardrails for input validation and off-topic detection.
 """
 
+# Topics clearly outside the census dataset — caught before hitting the LLM
+_OFF_TOPIC_PHRASES = [
+    "weather", "forecast", "temperature", "climate",
+    "stock", "share price", "nasdaq", "s&p", "crypto", "bitcoin",
+    "sports", "nfl", "nba", "mlb", "soccer", "football score",
+    "recipe", "cook", "restaurant",
+    "movie", "film", "tv show", "netflix",
+    "write me a", "write a poem", "tell me a joke",
+    "translate", "what time is it",
+]
+
+_OFF_TOPIC_RESPONSE = (
+    "I can only answer questions about US census and demographic data "
+    "(population, income, housing, education, employment, etc.). "
+    "How can I help you with that?"
+)
+
 
 def validate_input(user_message: str) -> tuple[bool, str | None]:
     """
     Validate user input before sending to the LLM.
-    
+
     Returns:
         (is_valid, error_message) - if is_valid is False, error_message explains why.
     """
@@ -22,6 +39,8 @@ def validate_input(user_message: str) -> tuple[bool, str | None]:
     if len(user_message) > 2000:
         return False, "Your message is too long. Please keep your question under 2000 characters."
 
+    message_lower = user_message.lower()
+
     # Check for prompt injection attempts
     injection_phrases = [
         "ignore your instructions",
@@ -35,12 +54,16 @@ def validate_input(user_message: str) -> tuple[bool, str | None]:
         "act as if",
         "pretend you are",
     ]
-    message_lower = user_message.lower()
     for phrase in injection_phrases:
         if phrase in message_lower:
             return False, (
                 "I'm designed to answer questions about US census and population data. "
                 "How can I help you with demographic information?"
             )
+
+    # Catch obviously off-topic queries before they reach the LLM
+    for phrase in _OFF_TOPIC_PHRASES:
+        if phrase in message_lower:
+            return False, _OFF_TOPIC_RESPONSE
 
     return True, None

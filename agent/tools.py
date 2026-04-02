@@ -107,6 +107,12 @@ def execute_sql_query(sql: str) -> str:
         if f" {keyword} " in f" {sql_stripped} " or sql_stripped.startswith(f"{keyword} "):
             return json.dumps({"error": f"Queries containing {keyword} are not allowed."})
 
+    # Block access to metadata tables — use the lookup_field_descriptions tool instead
+    blocked_tables = ["INFORMATION_SCHEMA"]
+    for table in blocked_tables:
+        if table in sql_stripped:
+            return json.dumps({"error": f"Direct queries to {table} are not allowed. Use the lookup_field_descriptions tool instead."})
+
     try:
         conn = get_snowflake_connection()
         cursor = conn.cursor()
@@ -156,20 +162,31 @@ def lookup_field_descriptions(search_term: str) -> str:
         JSON string with matching field descriptions.
     """
     sql = f"""
-    SELECT 
+    SELECT
         TABLE_ID,
         TABLE_NUMBER,
         TABLE_TITLE,
         FIELD_LEVEL_1,
         FIELD_LEVEL_2,
         FIELD_LEVEL_3,
-        FIELD_LEVEL_4
+        FIELD_LEVEL_4,
+        FIELD_LEVEL_5,
+        FIELD_LEVEL_6,
+        FIELD_LEVEL_7,
+        FIELD_LEVEL_8,
+        FIELD_LEVEL_9,
     FROM "2020_METADATA_CBG_FIELD_DESCRIPTIONS"
-    WHERE 
+    WHERE
         UPPER(TABLE_TITLE) LIKE '%{search_term.upper().replace("'", "''")}%'
+        OR UPPER(FIELD_LEVEL_1) LIKE '%{search_term.upper().replace("'", "''")}%'
         OR UPPER(FIELD_LEVEL_2) LIKE '%{search_term.upper().replace("'", "''")}%'
         OR UPPER(FIELD_LEVEL_3) LIKE '%{search_term.upper().replace("'", "''")}%'
         OR UPPER(FIELD_LEVEL_4) LIKE '%{search_term.upper().replace("'", "''")}%'
+        OR UPPER(FIELD_LEVEL_5) LIKE '%{search_term.upper().replace("'", "''")}%'
+        OR UPPER(FIELD_LEVEL_6) LIKE '%{search_term.upper().replace("'", "''")}%'
+        OR UPPER(FIELD_LEVEL_7) LIKE '%{search_term.upper().replace("'", "''")}%'
+        OR UPPER(FIELD_LEVEL_8) LIKE '%{search_term.upper().replace("'", "''")}%'
+        OR UPPER(FIELD_LEVEL_9) LIKE '%{search_term.upper().replace("'", "''")}%'
     ORDER BY TABLE_ID
     LIMIT 50
     """
