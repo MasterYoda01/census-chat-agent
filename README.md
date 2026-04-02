@@ -2,8 +2,7 @@
 
 An interactive, production-quality chat agent that answers natural language questions about US population data, grounded in SafeGraph's Open Census Data (via Snowflake Marketplace).
 
-**Live Demo:** `<DEPLOYED_URL>`
-**Credentials:** (if applicable)
+**Live Demo:** https://census-chat-agent-1.streamlit.app/
 
 ---
 
@@ -182,10 +181,8 @@ census-chat-agent/
 ├── tests/
 │   ├── test_guardrails.py     # Off-topic detection, input validation
 │   ├── test_tools.py          # SQL execution, error handling
-│   ├── test_pipeline.py       # End-to-end integration tests
-│   └── test_edge_cases.py     # Ambiguous, adversarial, unanswerable queries
+│   └── test_edge_cases.py     # Ambiguous, adversarial, unanswerable queries + regression tests
 ├── requirements.txt
-├── .env.example
 ├── .env.example
 ├── .streamlit/
 │   └── config.toml
@@ -248,7 +245,7 @@ streamlit run app.py
   1. Send messages + tools to Claude
   2. If tool call → execute → append result → send back
   3. If text response → return to user
-  4. Max 3 tool calls per turn
+  4. Max 10 tool calls per turn
   5. SQL errors returned as tool results so LLM can retry once
 
 ### Phase 3: Chat UI (2h)
@@ -258,10 +255,11 @@ streamlit run app.py
 - [x] Loading spinner + example questions as clickable buttons
 
 ### Phase 4: Guardrails & Error Handling (2h)
-- [x] Off-topic detection (not about US census/demographics)
+- [x] Off-topic detection (weather, stocks, sports, etc. rejected before hitting the LLM)
 - [x] Prompt injection defense
+- [x] Block `information_schema` and metadata table direct queries at the tool level
 - [x] Graceful degradation: SQL errors, empty results, timeouts
-- [x] System prompt rules: no hallucination, clarify ambiguity
+- [x] System prompt rules: no hallucination, clarify ambiguity, use `lookup_field_descriptions` with 2-attempt limit
 
 ### Phase 5: Testing (2h)
 - [x] Guardrails unit tests
