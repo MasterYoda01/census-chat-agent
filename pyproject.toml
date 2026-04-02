@@ -1,0 +1,4 @@
+[tool.pytest.ini_options]
+markers = [
+    "requires_api: tests that need real Snowflake + OpenAI credentials (deselect with '-m \"not requires_api\"')",
+]
