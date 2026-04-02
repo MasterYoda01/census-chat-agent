@@ -223,9 +223,9 @@ streamlit run app.py
 
 ---
 
-## My Implementation Plan (~18 hours)
+## My Implementation Plan (~16 hours)
 
-### Phase 1: Data Exploration (2h) 
+### Phase 1: Data Exploration (3h) 
 - [x] Set up Snowflake trial, install SafeGraph Open Census Data from Marketplace
 - [x] Map all tables via `SHOW TABLES`
 - [x] Explore field descriptions metadata
@@ -248,13 +248,13 @@ streamlit run app.py
   4. Max 10 tool calls per turn
   5. SQL errors returned as tool results so LLM can retry once
 
-### Phase 3: Chat UI (2h)
+### Phase 3: Chat UI (1h)
 - [x] `app.py` — Streamlit chat with `st.chat_message` / `st.chat_input`
 - [x] Session state for conversation history
 - [x] Show SQL queries in `st.expander` for transparency
 - [x] Loading spinner + example questions as clickable buttons
 
-### Phase 4: Guardrails & Error Handling (2h)
+### Phase 4: Guardrails & Error Handling (1h)
 - [x] Off-topic detection (weather, stocks, sports, etc. rejected before hitting the LLM)
 - [x] Prompt injection defense
 - [x] Block `information_schema` and metadata table direct queries at the tool level
@@ -273,7 +273,7 @@ streamlit run app.py
 - [x] Test deployed version end-to-end
 - [x] Verify latency < 60 seconds
 
-### Phase 7: Reflection & Submission (2h)
+### Phase 7: Reflection & Submission (1h)
 - [x] Write REFLECTION.md
 - [x] Final README with live URL
 - [x] Push to private GitHub repo
