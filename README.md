@@ -236,15 +236,15 @@ streamlit run app.py
 - [x] Understand data structure (CBG-level, FIPS joins, column naming)
 
 ### Phase 2: Core Agent with Tool Use (6h)
-- [ ] `prompts.py` — System prompt with curated schema summary and:
+- [x] `prompts.py` — System prompt with curated schema summary and:
   - Curated schema context for common topics
   - FIPS join pattern instructions
   - Rules: quote table names, aggregate correctly, don't hallucinate
   - Median aggregation warnings
-- [ ] `tools.py` — Two tools:
+- [x] `tools.py` — Two tools:
   - `run_sql_query`: execute SQL against Snowflake, return results or error
   - `lookup_field_descriptions`: search `2020_METADATA_CBG_FIELD_DESCRIPTIONS` for column mappings
-- [ ] `pipeline.py` — Function calling loop:
+- [x] `pipeline.py` — Function calling loop:
   1. Send messages + tools to Claude
   2. If tool call → execute → append result → send back
   3. If text response → return to user
@@ -252,34 +252,34 @@ streamlit run app.py
   5. SQL errors returned as tool results so LLM can retry once
 
 ### Phase 3: Chat UI (2h)
-- [ ] `app.py` — Streamlit chat with `st.chat_message` / `st.chat_input`
-- [ ] Session state for conversation history
-- [ ] Show SQL queries in `st.expander` for transparency
-- [ ] Loading spinner + example questions as clickable buttons
+- [x] `app.py` — Streamlit chat with `st.chat_message` / `st.chat_input`
+- [x] Session state for conversation history
+- [x] Show SQL queries in `st.expander` for transparency
+- [x] Loading spinner + example questions as clickable buttons
 
 ### Phase 4: Guardrails & Error Handling (2h)
-- [ ] Off-topic detection (not about US census/demographics)
-- [ ] Prompt injection defense
-- [ ] Graceful degradation: SQL errors, empty results, timeouts
-- [ ] System prompt rules: no hallucination, clarify ambiguity
+- [x] Off-topic detection (not about US census/demographics)
+- [x] Prompt injection defense
+- [x] Graceful degradation: SQL errors, empty results, timeouts
+- [x] System prompt rules: no hallucination, clarify ambiguity
 
 ### Phase 5: Testing (2h)
-- [ ] Guardrails unit tests
-- [ ] SQL execution + error handling tests
-- [ ] End-to-end integration tests
-- [ ] Edge case tests (ambiguous, adversarial, unanswerable)
+- [x] Guardrails unit tests
+- [x] SQL execution + error handling tests
+- [x] End-to-end integration tests
+- [x] Edge case tests (ambiguous, adversarial, unanswerable)
 
 ### Phase 6: Deploy & Polish (2h)
-- [ ] Deploy to Streamlit Community Cloud
-- [ ] Set secrets in dashboard
-- [ ] Test deployed version end-to-end
-- [ ] Verify latency < 60 seconds
+- [x] Deploy to Streamlit Community Cloud
+- [x] Set secrets in dashboard
+- [x] Test deployed version end-to-end
+- [x] Verify latency < 60 seconds
 
 ### Phase 7: Reflection & Submission (2h)
-- [ ] Write REFLECTION.md
-- [ ] Final README with live URL
-- [ ] Push to private GitHub repo
-- [ ] Share with sfc-gh-setli, sfc-gh-nwiegand, sfc-gh-wenli
+- [x] Write REFLECTION.md
+- [x] Final README with live URL
+- [x] Push to private GitHub repo
+- [x] Share with sfc-gh-setli, sfc-gh-nwiegand, sfc-gh-wenli
 
 ---
 

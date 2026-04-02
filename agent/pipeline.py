@@ -14,9 +14,11 @@ from agent.tools import TOOL_DEFINITIONS, execute_tool
 from agent.guardrails import validate_input
 
 
-client = anthropic.Anthropic(api_key=settings.ANTHROPIC_API_KEY)
-
 MODEL = "claude-sonnet-4-20250514"
+
+
+def _get_client():
+    return anthropic.Anthropic(api_key=settings.ANTHROPIC_API_KEY)
 
 
 def run_agent(conversation_history: list[dict], user_message: str) -> dict:
@@ -53,6 +55,7 @@ def run_agent(conversation_history: list[dict], user_message: str) -> dict:
 
     try:
         while tool_call_count < settings.MAX_TOOL_CALLS_PER_TURN:
+            client = _get_client()
             response = client.messages.create(
                 model=MODEL,
                 max_tokens=4096,
